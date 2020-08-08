@@ -37,10 +37,30 @@ def merge_sort(arr):
 # In other words, your implementation should not allocate any additional lists
 # or data structures; it can only re-use the memory it was given as input
 def merge_in_place(arr, start, mid, end):
-    # Your code here
-    pass
+
+    start2 = mid + 1
+
+    if arr[mid] <= arr[start2]:
+        return arr
+    else:
+        while start <= mid and start2 <= end:
+            if arr[start] <= arr[start2]:
+                start += 1
+            else:
+                start2_value = arr[start2]
+                for n in range(start2 - 1, start - 1, -1):
+                    arr[n+1] = arr[n]
+                arr[start] = start2_value
+                start += 1
+                mid += 1
+                start2 += 1
 
 
-def merge_sort_in_place(arr, l, r):
-    # Your code here
-    pass
+def merge_sort_in_place(arr, left, right):
+    if right - left in (-1, 0):
+        return arr
+    else:
+        midpoint = ((right - left) // 2) + left
+        merge_sort_in_place(arr, left, midpoint)
+        merge_sort_in_place(arr, midpoint + 1, right)
+        return merge_in_place(arr, left, midpoint, right)
